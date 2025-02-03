@@ -291,6 +291,40 @@ public class Ejercicios {
         session.close();
     }
 
+    private void eliminarUsuario(Scanner scanner){
+        System.out.println("Ingresa el Id del usuario que quieres eliminar: ");
+        int id = scanner.nextInt();
+        scanner.nextLine();
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Usuario usuario = session.get(Usuario.class, id);
+        if(usuario != null){
+            session.beginTransaction();
+            session.delete(usuario);
+            session.getTransaction().commit();
+            System.out.println("Usuario eliminado");
+        }
+        else{
+            System.out.println("Usuario no encontrado");
+        }
+        session.close();
+    }
+    private void mostrarUsuario(Scanner scanner){
+        System.out.println("Ingrese el Id del usuario que quieres ver");
+        int id = scanner.nextInt();
+        scanner.nextLine();
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Usuario usuario = session.get(Usuario.class, id);
+
+        if(usuario != null){
+            System.out.println("ID: "+usuario.getId()+"\nNombre: "+usuario.getNombre()+"\nEmail: "+usuario.getEmail());
+        }
+        else{
+            System.out.println("Usuario no encontrado");
+        }
+        session.close();
+    }
+
+
 
     public void gestionarPerfiles(Scanner scanner) {
 
