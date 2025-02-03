@@ -198,13 +198,99 @@ public class Ejercicios {
 
     private void mostrarSeriesPorGenero(Scanner scanner){
         System.out.println("Ingresa el genero: ");
-        
+        String genero = scanner.nextLine();
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        List<Object[]> resultados = session.createQuery(
+                        "SELECT s.titulo, AVG(e.duracion) FROM Serie s " +
+                                "JOIN s.generos g JOIN s.episodios e " +
+                                "WHERE g.nombre = :genero GROUP BY s.id", Object[].class)
+                .setParameter("genero", genero)
+                .list();
+
+        for (Object[] resultado : resultados) {
+            System.out.println("Serie: " + resultado[0] + ", Duración Media: " + resultado[1] + " minutos");
+        }
+        session.close();
+    }
+
+    private void mostrarTop5SeriesMasVistas(){
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        List<Object[]> resultados = session.createQuery(
+                        "SELECT s.titulo, COUNT(h.id) FROM Serie s " +
+                                "JOIN s.episodios e JOIN e.historial h " +
+                                "GROUP BY s.id ORDER BY COUNT(h.id) DESC", Object[].class)
+                .setMaxResults(5)
+                .list();
     }
 
 
     public void gestionarUsuarios(Scanner scanner) {
+        while (true) {
+            System.out.println("\n--- GESTIONAR USUARIOS ---");
+            System.out.print("Seleccione una opcion: ");
+            System.out.println("1. Agregar Usuario");
+            System.out.println("2. Modificar Usuario");
+            System.out.println("3. Eliminar Usuario");
+            System.out.println("4. Mostrar Usuario");
+            System.out.println("5. Volver al Menu Principal");
+            scanner.nextLine();
 
+
+            int opcion = scanner.nextInt();
+            switch (opcion) {
+                case 1 -> agregarUsuario(scanner);
+                case 2 -> modificarUsuario(scanner);
+                case 3 -> eliminarUsuario(scanner);
+                case 4 -> mostrarUsuario(scanner);
+                case 5 -> {
+                    return;
+                }
+                default -> System.out.println("No existe esa opcion");
+            }
+        }
     }
+    private void agregarUsuario(Scanner scanner) {
+        System.out.print("Ingrese el nombre del usuario: ");
+        String nombre = scanner.nextLine();
+        System.out.print("Ingrese el email del usuario: ");
+        String email = scanner.nextLine();
+
+        Usuario usuario = new Usuario();
+        usuario.setNombre(nombre);
+        usuario.setEmail(email);
+
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        session.beginTransaction();
+        session.save(usuario);
+        session.getTransaction().commit();
+        session.close();
+
+        System.out.println("Usuario agregado");
+    }
+    private void modificarUsuario(Scanner scanner) {
+        System.out.print("Ingrese el ID del usuario para modificar: ");
+        int id = scanner.nextInt();
+        scanner.nextLine();
+
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Usuario usuario = session.get(Usuario.class, id);
+
+        if (usuario != null) {
+            System.out.print("Ingrese el nuevo nombre: ");
+            usuario.setNombre(scanner.nextLine());
+            System.out.print("Ingrese el nuevo email: ");
+            usuario.setEmail(scanner.nextLine());
+
+            session.beginTransaction();
+            session.update(usuario);
+            session.getTransaction().commit();
+            System.out.println("Usuario modificado");
+        } else {
+            System.out.println("Usuario no encontrado");
+        }
+        session.close();
+    }
+
 
     public void gestionarPerfiles(Scanner scanner) {
 
