@@ -327,8 +327,66 @@ public class Ejercicios {
 
 
     public void gestionarPerfiles(Scanner scanner) {
+        while (true) {
+            System.out.println("\n--- GESTIONAR USUARIOS ---");
+            System.out.print("Seleccione una opcion: ");
+            System.out.println("1. Agregar Perfil");
+            System.out.println("2. Modificar Perfil");
+            System.out.println("3. Eliminar Perfil");
+            System.out.println("4. Mostrar Perfil");
+            System.out.println("5. Volver al Menu Principal");
+            scanner.nextLine();
+
+
+            int opcion = scanner.nextInt();
+            switch (opcion) {
+                case 1 -> agregarPerfil(scanner);
+                case 2 -> modificarPerfil(scanner);
+                case 3 -> eliminarPerfil(scanner);
+                case 4 -> mostrarPerfil(scanner);
+                case 5 -> {
+                    return;
+                }
+                default -> System.out.println("No existe esa opcion");
+            }
+        }
+    }
+
+    private void agregarPerfil(Scanner scanner) {
+        System.out.print("Ingrese el nombre del perfil: ");
+        String nombre = scanner.nextLine();
+        System.out.print("Ingrese la edad del perfil: ");
+        int edad = scanner.nextInt();
+
+        Perfil perfil = new Perfil();
+        perfil.setNombre(nombre);
+        perfil.setEdad(edad);
+
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        session.beginTransaction();
+        session.save(perfil);
+        session.getTransaction().commit();
+        session.close();
 
     }
+    private void modificarPerfil(Scanner scanner) {
+        System.out.print("Ingrese el ID del perfil para modificar: ");
+        int id = scanner.nextInt();
+        scanner.nextLine();
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Perfil perfil = session.get(Perfil.class, id);
+        if (perfil != null) {
+            System.out.print("Ingrese el nuevo nombre: ");
+            perfil.setNombre(scanner.nextLine());
+            System.out.print("Ingrese la nueva edad: ");
+            perfil.setEdad(scanner.nextInt());
+        }
+        session.beginTransaction();
+        session.update(perfil);
+        session.getTransaction().commit();
+        session.close();
+    }
+
 
     public void gestionarSeries(Scanner scanner) {
 
