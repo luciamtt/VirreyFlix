@@ -30,6 +30,30 @@ public class Historial {
 
     }
 
+    public Episodios getEpisodio() {
+        return episodio;
+    }
+
+    public void setEpisodio(Episodios episodio) {
+        this.episodio = episodio;
+    }
+
+    public Perfil getPerfil() {
+        return perfil;
+    }
+
+    public void setPerfil(Perfil perfil) {
+        this.perfil = perfil;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public LocalDateTime getFechaReproduccion() {
         return fechaReproduccion;
     }

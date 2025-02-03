@@ -28,6 +28,9 @@ public class Perfil {
         this.u = u;
         this.edad = edad;
     }
+    @OneToOne
+    @JoinColumn(name = "usuario_id", unique = true)
+    private Usuario usuario;
 
     @OneToMany(mappedBy = "perfil")
     Set<Historial> historalies = new HashSet<>();

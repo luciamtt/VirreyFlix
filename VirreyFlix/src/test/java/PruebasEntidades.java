@@ -84,6 +84,6 @@ public class PruebasEntidades {
         Session s = HibernateUtil.getSessionFactory().openSession();
         Perfil p  = s.find(Perfil.class,1);
         System.out.println(p);
-        System.out.println(p.);
+        System.out.println(p);
     }
 }

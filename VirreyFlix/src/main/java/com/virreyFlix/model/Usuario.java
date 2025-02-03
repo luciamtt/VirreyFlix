@@ -13,6 +13,11 @@ public class Usuario {
     @Column(length = 100, unique = true)
     String email;
 
+    @OneToOne(mappedBy = "usuario", cascade = CascadeType.ALL)
+    private Perfil perfil;
+    public Usuario() {
+    }
+
     public Usuario(int id, String nombre, String email) {
         this.id = id;
         this.nombre = nombre;
@@ -41,5 +46,13 @@ public class Usuario {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public Perfil getPerfil() {
+        return perfil;
+    }
+
+    public void setPerfil(Perfil perfil) {
+        this.perfil = perfil;
     }
 }
