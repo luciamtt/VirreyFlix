@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 
 import java.lang.module.Configuration;
 import java.sql.SQLOutput;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Scanner;
 
@@ -96,93 +97,129 @@ public class Ejercicios {
             default -> System.out.println("Opcion Invalida");
         }
     }
-        private void mostrarUsuariosConPerfiles(){
-            Session session = HibernateUtil.getSessionFactory().openSession();
-            List<Usuario> usuarios = session.createQuery("FROM Usuario", Usuario.class).list();
-            for (Usuario usuario : usuarios) {
-                Perfil perfil = usuario.getPerfil();
-                System.out.println("Usuario: " + usuario.getNombre() + ", Email: " + usuario.getEmail() + ", Perfil: " + (perfil != null ? perfil.getNombre() : "Sin perfil"));
-            }
-            session.close();
-        }
 
-        private void mostrarTodasLasSeries(){
+    private void mostrarUsuariosConPerfiles() {
         Session session = HibernateUtil.getSessionFactory().openSession();
-        List<Serie> serie = session.createQuery("FROM Serie",Serie.class).list();
-
-        for (Serie series : serie){
-            System.out.println("Serie: "+series.getNombre()+ " Genero: "+series.getGenero() +" Clasificacion: "+series.getClasificacion());
+        List<Usuario> usuarios = session.createQuery("FROM Usuario", Usuario.class).list();
+        for (Usuario usuario : usuarios) {
+            Perfil perfil = usuario.getPerfil();
+            System.out.println("Usuario: " + usuario.getNombre() + ", Email: " + usuario.getEmail() + ", Perfil: " + (perfil != null ? perfil.getNombre() : "Sin perfil"));
         }
         session.close();
+    }
+
+    private void mostrarTodasLasSeries() {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        List<Serie> serie = session.createQuery("FROM Serie", Serie.class).list();
+
+        for (Serie series : serie) {
+            System.out.println("Serie: " + series.getNombre() + " Genero: " + series.getGenero() + " Clasificacion: " + series.getClasificacion());
         }
+        session.close();
+    }
 
-        public void mostrarSeriesPorEdad(Scanner scanner){
+    public void mostrarSeriesPorEdad(Scanner scanner) {
 
-            System.out.println("Ingrese la edad de la serie: ");
-           int edad =  scanner.nextInt();
-            Session session = HibernateUtil.getSessionFactory().openSession();
-            List<Serie> serie = session.createQuery("FROM Serie WHERE edad = :edad",Serie.class).setParameter("edad",edad).list();
+        System.out.println("Ingrese la edad de la serie: ");
+        int edad = scanner.nextInt();
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        List<Serie> serie = session.createQuery("FROM Serie WHERE edad = :edad", Serie.class).setParameter("edad", edad).list();
 
-            for (Serie series : serie){
-                System.out.println("Serie: "+series.getNombre()+ " Genero: "+series.getGenero() +" Clasificacion: "+series.getClasificacion());
-            }
-            session.close();
+        for (Serie series : serie) {
+            System.out.println("Serie: " + series.getNombre() + " Genero: " + series.getGenero() + " Clasificacion: " + series.getClasificacion());
         }
-        private void mostrarCapitulosDeSerie(Scanner scanner){
-            System.out.println("Ingrese el ID de la serie: ");
-            int id = scanner.nextInt();
+        session.close();
+    }
 
-            Session session = HibernateUtil.getSessionFactory().openSession();
-            List<Episodios> episodios = session.createQuery("FROM Serie WHERE id = :id",Episodios.class).setParameter("id",id).list();
+    private void mostrarCapitulosDeSerie(Scanner scanner) {
+        System.out.println("Ingrese el ID de la serie: ");
+        int id = scanner.nextInt();
 
-            for(Episodios epi :  episodios){
-                System.out.println("Nombre : "+epi.getSerie()+ " Capitulos: "+epi.getTitulo() +" Duracion: "+epi.getDuracion());
-            }
-            session.close();
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        List<Episodios> episodios = session.createQuery("FROM Serie WHERE id = :id", Episodios.class).setParameter("id", id).list();
+
+        for (Episodios epi : episodios) {
+            System.out.println("Nombre : " + epi.getSerie() + " Capitulos: " + epi.getTitulo() + " Duracion: " + epi.getDuracion());
         }
+        session.close();
+    }
 
-        private void mostrarCapitulosVistosPorUsuario(Scanner scanner){
+    private void mostrarCapitulosVistosPorUsuario(Scanner scanner) {
         System.out.println("Ingrese el ID del usuario: ");
-            int id = scanner.nextInt();
-            Session session = HibernateUtil.getSessionFactory().openSession();
-            List<Historial> historial = session.createQuery("FROM Historial WHERE perfil_id = :id",Historial.class).setParameter("id",id).list();
+        int id = scanner.nextInt();
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        List<Historial> historial = session.createQuery("FROM Historial WHERE perfil_id = :id", Historial.class).setParameter("id", id).list();
 
-            for (Historial hist : historial){
-                Episodios epi = hist.getEpisodio();
-                Serie serie = epi.getSerie();
-                System.out.println("Serie: "+serie.getNombre()+ " Capitulo: "+epi.getTitulo() +" Duracion: "+epi.getDuracion()+ "Fecha: "+hist.getFechaReproduccion());
+        for (Historial hist : historial) {
+            Episodios epi = hist.getEpisodio();
+            Serie serie = epi.getSerie();
+            System.out.println("Serie: " + serie.getNombre() + " Capitulo: " + epi.getTitulo() + " Duracion: " + epi.getDuracion() + "Fecha: " + hist.getFechaReproduccion());
 
+        }
+    }
+
+    private void añadirSerieAlHistorial(Scanner scanner) {
+        System.out.println("Ingrese el ID del Perfil: ");
+        int idPerfil = scanner.nextInt();
+        System.out.println("Ingrese el ID de la Serie: ");
+        int idSerie = scanner.nextInt();
+        LocalDateTime fechaHoy = LocalDateTime.now();
+
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        session.beginTransaction(); //Incio una nueva transaccion en Hibernate para poder insertar o modificar registros de la base de datos
+        //para finalizarla hay que cerrarla con un commit
+
+
+        List<Episodios> episodios = session.createQuery("FROM Episodio WHERE serie.id = :serieId", Episodios.class)
+                .setParameter("serieId", idSerie)
+                .list();
+        for (Episodios episodio : episodios) {
+            Historial historialExistente = session.createQuery("FROM Historial WHERE perfil.id = :perfilId AND episodio.id = :episodioId", Historial.class)
+                    .setParameter("perfilId", idPerfil)
+                    .setParameter("episodioId", episodio.getId())
+                    .uniqueResult();
+
+            if (historialExistente != null) {
+                historialExistente.setFechaReproduccion(fechaHoy);
+                session.update(historialExistente);
+            } else {
+                Historial nuevoHistorial = new Historial();
+                nuevoHistorial.setPerfil(session.get(Perfil.class, idPerfil));
+                nuevoHistorial.setEpisodio(episodio);
+                nuevoHistorial.setFechaReproduccion(fechaHoy);
+                session.save(nuevoHistorial);
             }
         }
-
-        private void añadirSerieAlHistorial(Scanner scanner){
-            System.out.println("Ingrese el ID del Perfil: ");
-            int idPerfil = scanner.nextInt();
-            System.out.println("Ingrese el ID de la Serie: ");
-            int idSerie = scanner.nextInt();
-
-            Session session = HibernateUtil.getSessionFactory().openSession();
-            session.beginTransaction(); //Incio una nueva transaccion en Hibernate para poder insertar o modificar registros de la base de datos
-            //para finalizarla hay que cerrarla con un commit
-
-        }
-
-
-
-    public void gestionarUsuarios(Scanner scanner){
-
-    }
-    public void gestionarPerfiles(Scanner scanner){
-
-    }
-    public void gestionarSeries(Scanner scanner){
-
-    }
-    public void gestionarEpisodios(Scanner scanner){
-
-    }
-    public void gestionarHistorial(Scanner scanner){
+        session.getTransaction().commit();
+        session.close();
+        System.out.println("Historial actualizado");
 
     }
 
+    private void mostrarSeriesPorGenero(Scanner scanner){
+        System.out.println("Ingresa el genero: ");
+        
+    }
+
+
+    public void gestionarUsuarios(Scanner scanner) {
+
+    }
+
+    public void gestionarPerfiles(Scanner scanner) {
+
+    }
+
+    public void gestionarSeries(Scanner scanner) {
+
+    }
+
+    public void gestionarEpisodios(Scanner scanner) {
+
+    }
+
+    public void gestionarHistorial(Scanner scanner) {
+
+    }
 }
+
