@@ -19,7 +19,7 @@ public class Historial {
 
     @ManyToOne
     @JoinColumn(name = "episodio_id")
-    Episodios episodio;
+    Episodio episodio;
 
     public Historial() {
         this.fechaReproduccion = LocalDateTime.now();
@@ -30,11 +30,11 @@ public class Historial {
 
     }
 
-    public Episodios getEpisodio() {
+    public Episodio getEpisodio() {
         return episodio;
     }
 
-    public void setEpisodio(Episodios episodio) {
+    public void setEpisodio(Episodio episodio) {
         this.episodio = episodio;
     }
 

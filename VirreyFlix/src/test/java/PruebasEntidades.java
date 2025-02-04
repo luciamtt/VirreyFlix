@@ -4,8 +4,6 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.junit.jupiter.api.Test;
 
-import java.time.LocalDateTime;
-
 public class PruebasEntidades {
 
     @Test
@@ -31,9 +29,9 @@ public class PruebasEntidades {
         Serie serie2 = new Serie("pocoyo","infaltil",0);
         Serie serie3 = new Serie("lalalal","terror",7);
 
-        Episodios ep1 = new Episodios("Navidad",30);
-        Episodios ep2 = new Episodios("Halloween",40);
-        Episodios ep3 = new Episodios("Verano",20);
+        Episodio ep1 = new Episodio("Navidad",30);
+        Episodio ep2 = new Episodio("Halloween",40);
+        Episodio ep3 = new Episodio("Verano",20);
 
         ep1.setSerie(serie);
         ep1.setSerie(serie);
@@ -65,12 +63,12 @@ public class PruebasEntidades {
 
     public void historiales(){
         Session s2 = HibernateUtil.getSessionFactory().openSession();
-        Transaction tx = s2.beginTransaction(LocalDateTime.now().minusDays());
+        Transaction tx = s2.beginTransaction();
 
         Historial h = new Historial();
         Historial h2 = new Historial();
 
-        h.setEpisodio(s2.find(Episodios.class,1));
+        h.setEpisodio(s2.find(Episodio.class,1));
         h.setPerfil(s2.find(Perfil.class,1));
 
         s2.persist(h);

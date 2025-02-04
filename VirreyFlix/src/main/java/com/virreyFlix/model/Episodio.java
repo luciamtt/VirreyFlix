@@ -1,36 +1,36 @@
 package com.virreyFlix.model;
 
+
+
 import jakarta.persistence.*;
 
-import java.util.HashSet;
-import java.util.Set;
-
 @Entity
-public class Episodios {
+@Table(name = "Episodio")
+public class Episodio {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    int id;
-    @Column(length = 200)
-    String titulo;
-    int duracion;
+    private int id;
 
+    private String titulo;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "serie_id")
-    Serie serie;
+    private int duracion;
 
-    public Episodios() {
+    @ManyToOne
+    @JoinColumn(name = "serie_id", nullable = false)
+    private Serie serie;
+
+    public Episodio() {
 
     }
 
-    public Episodios( String titulo, int duracion) {
+    public Episodio(String titulo, int duracion) {
 
         this.titulo = titulo;
         this.duracion = duracion;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 

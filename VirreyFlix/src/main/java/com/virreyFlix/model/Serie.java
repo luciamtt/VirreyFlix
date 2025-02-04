@@ -3,57 +3,82 @@ package com.virreyFlix.model;
 import jakarta.persistence.*;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
+@Table(name = "Serie")
 public class Serie {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    String nombre;
-    @Column(length = 100)
-    String genero;
-    @Column(length = 100, unique = true)
-    int clasificacion;
+    private int id;
 
-    public Serie(String nombre, String genero, int clasificacion) {
-        this.nombre = nombre;
+    private String titulo;
+
+    @ManyToOne
+    @JoinColumn(name = "genero")
+    private Genero genero;
+
+    private int calificacionEdad;
+
+    @OneToMany(mappedBy = "serie", cascade = CascadeType.ALL)
+    private List<Episodio> episodios;
+
+    public Serie(int calificacionEdad, Genero genero, List<Episodio> episodios, String titulo) {
+        this.calificacionEdad = calificacionEdad;
         this.genero = genero;
-        this.clasificacion = clasificacion;
+        this.episodios = episodios;
+        this.titulo = titulo;
     }
 
-    Set<Episodios> episodios = new HashSet<>();
-
-    public String getNombre() {
-        return nombre;
+    public int getCalificacionEdad() {
+        return calificacionEdad;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public void setCalificacionEdad(int calificacionEdad) {
+        this.calificacionEdad = calificacionEdad;
     }
 
-    public int getClasificacion() {
-        return clasificacion;
+    public String getTitulo() {
+        return titulo;
     }
 
-    public void setClasificacion(int clasificacion) {
-        this.clasificacion = clasificacion;
+    public void setTitulo(String titulo) {
+        this.titulo = titulo;
     }
 
-    public String getGenero() {
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public Genero getGenero() {
         return genero;
     }
 
-    public void setGenero(String genero) {
+    public void setGenero(Genero genero) {
         this.genero = genero;
+    }
+
+    public List<Episodio> getEpisodios() {
+        return episodios;
+    }
+
+    public void setEpisodios(List<Episodio> episodios) {
+        this.episodios = episodios;
     }
 
     @Override
     public String toString() {
         return "Serie{" +
-                "nombre='" + nombre + '\'' +
-                ", genero='" + genero + '\'' +
-                ", clasificacion=" + clasificacion +
+                "calificacionEdad=" + calificacionEdad +
+                ", id=" + id +
+                ", titulo='" + titulo + '\'' +
+                ", genero=" + genero +
                 ", episodios=" + episodios +
                 '}';
     }

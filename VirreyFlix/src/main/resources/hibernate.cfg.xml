@@ -7,7 +7,7 @@
     <session-factory>
         <property name="hibernate.connection.driver_class">com.mysql.cj.jdbc.Driver</property>
         <!-- Configuración de la base de datos -->
-        <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/hibernate1?createDatabaseIfNotExist=true</property>
+        <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/virreyflix?createDatabaseIfNotExist=true</property>
         <property name="hibernate.connection.username">root</property>
         <property name="hibernate.connection.password"></property>
         <property name="hibernate.connection.pool_size">50</property>
@@ -26,10 +26,11 @@
         <property name="hibernate.current_session_context_class">thread</property>
 
         <!-- Añadir las clases de las entidades -->
+        <mapping class="com.virreyFlix.model.Historial" />
+        <mapping class="com.virreyFlix.model.Genero"/>
         <mapping class="com.virreyFlix.model.Usuario" />
         <mapping class="com.virreyFlix.model.Perfil" />
-        <mapping class="com.virreyFlix.model.Serie" />
-        <mapping class="com.virreyFlix.model.Episodio"/>
-
+        <mapping class="com.virreyFlix.model.Episodio" />
+        <mapping class="com.virreyFlix.model.Serie"/>
     </session-factory>
 </hibernate-configuration>
