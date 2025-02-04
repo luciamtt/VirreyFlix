@@ -4,6 +4,7 @@ import com.virreyFlix.model.*;
 import org.hibernate.Session;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Scanner;
 
@@ -50,7 +51,7 @@ public class Main {
             System.out.println("5. Volver al Menú Principal");
 
             int opcion = scanner.nextInt();
-            scanner.nextLine();  // Limpieza del buffer
+            scanner.nextLine();
 
             switch (opcion) {
                 case 1 -> InsertarUsuario(scanner);
@@ -79,11 +80,11 @@ public class Main {
         session.getTransaction().commit();
         session.close();
 
-        System.out.println("Usuario agregado exitosamente.");
+        System.out.println("Usuario agregado");
     }
 
     private static void modificarUsuario(Scanner scanner) {
-        System.out.print("Ingrese el ID del usuario para modificar: ");
+        System.out.print("Ingresa el ID del usuario para modificar: ");
         int id = scanner.nextInt();
         scanner.nextLine();
 
@@ -91,17 +92,17 @@ public class Main {
         Usuario usuario = session.get(Usuario.class, id);
 
         if (usuario != null) {
-            System.out.print("Ingrese el nuevo nombre del usuario: ");
+            System.out.print("Ingresa el nuevo nombre del usuario: ");
             usuario.setNombre(scanner.nextLine());
-            System.out.print("Ingrese el nuevo correo electrónico del usuario: ");
+            System.out.print("Ingresa el nuevo correo electronico del usuario: ");
             usuario.setEmail(scanner.nextLine());
 
             session.beginTransaction();
             session.update(usuario);
             session.getTransaction().commit();
-            System.out.println("Usuario modificado exitosamente.");
+            System.out.println("Usuario modificado ");
         } else {
-            System.out.println("Usuario no encontrado.");
+            System.out.println("Usuario no encontrado");
         }
         session.close();
     }
@@ -118,9 +119,9 @@ public class Main {
             session.beginTransaction();
             session.delete(usuario);
             session.getTransaction().commit();
-            System.out.println("Usuario eliminado exitosamente.");
+            System.out.println("Usuario eliminado");
         } else {
-            System.out.println("Usuario no encontrado.");
+            System.out.println("Usuario no encontrado");
         }
         session.close();
     }
@@ -164,7 +165,7 @@ public class Main {
     }
 
     private static void insertarGenero(Scanner scanner) {
-        System.out.print("Ingrese el nombre del género: ");
+        System.out.print("Ingresa el nombre del genero: ");
         String nombre = scanner.nextLine();
 
         Genero genero = new Genero(nombre);
@@ -254,7 +255,7 @@ public class Main {
                 case 5 -> {
                     return;
                 }
-                default -> System.out.println("Opción inválida.");
+                default -> System.out.println("Opcion invalida.");
             }
         }
     }
@@ -276,15 +277,15 @@ public class Main {
             session.beginTransaction();
             session.save(perfil);
             session.getTransaction().commit();
-            System.out.println("Perfil agregado exitosamente.");
+            System.out.println("Perfil agregado");
         } else {
-            System.out.println("Usuario no encontrado.");
+            System.out.println("Usuario no encontrado");
         }
         session.close();
     }
 
     private static void modificarPerfil(Scanner scanner) {
-        System.out.print("Ingrese el ID del perfil a modificar: ");
+        System.out.print("Ingresa el ID del perfil a modificar: ");
         int id = scanner.nextInt();
         scanner.nextLine();
 
@@ -292,21 +293,21 @@ public class Main {
         Perfil perfil = session.get(Perfil.class, id);
 
         if (perfil != null) {
-            System.out.print("Ingrese el nuevo nombre del perfil: ");
+            System.out.print("Ingresa el nuevo nombre del perfil: ");
             perfil.setNombre(scanner.nextLine());
 
             session.beginTransaction();
             session.update(perfil);
             session.getTransaction().commit();
-            System.out.println("Perfil modificado exitosamente.");
+            System.out.println("Perfil modificado ");
         } else {
-            System.out.println("Perfil no encontrado.");
+            System.out.println("Perfil no encontrado");
         }
         session.close();
     }
 
     private static void eliminarPerfil(Scanner scanner) {
-        System.out.print("Ingrese el ID del perfil a eliminar: ");
+        System.out.print("Ingresa el ID del perfil a eliminar: ");
         int id = scanner.nextInt();
         scanner.nextLine();
 
@@ -317,9 +318,9 @@ public class Main {
             session.beginTransaction();
             session.delete(perfil);
             session.getTransaction().commit();
-            System.out.println("Perfil eliminado exitosamente.");
+            System.out.println("Perfil eliminado");
         } else {
-            System.out.println("Perfil no encontrado.");
+            System.out.println("Perfil no encontrado");
         }
         session.close();
     }
@@ -333,7 +334,7 @@ public class Main {
                 System.out.println("Nombre: " + perfil.getNombre() + ",Usuario: " + perfil.getU().getNombre() +" ,Edad" +perfil.getEdad());
             }
         } else {
-            System.out.println("No hay perfiles registrados.");
+            System.out.println("No hay perfiles registrados");
         }
         session.close();
 
@@ -349,7 +350,7 @@ public class Main {
             System.out.println("5. Volver al Menú Principal");
 
             int opcion = scanner.nextInt();
-            scanner.nextLine();  
+            scanner.nextLine();
 
             switch (opcion) {
                 case 1 -> insertarSerie(scanner);
@@ -425,9 +426,9 @@ public class Main {
             session.beginTransaction();
             session.update(serie);
             session.getTransaction().commit();
-            System.out.println("Serie modificada exitosamente.");
+            System.out.println("Serie modificada ");
         } else {
-            System.out.println("Serie no encontrada.");
+            System.out.println("Serie no encontrada");
         }
         session.close();
     }
@@ -444,9 +445,9 @@ public class Main {
             session.beginTransaction();
             session.delete(serie);
             session.getTransaction().commit();
-            System.out.println("Serie eliminada exitosamente.");
+            System.out.println("Serie eliminada");
         } else {
-            System.out.println("Serie no encontrada.");
+            System.out.println("Serie no encontrada");
         }
         session.close();
     }
@@ -461,7 +462,7 @@ public class Main {
                         " ,Genero: " + serie.getGenero().getNombre() + " ,Calificacion Edad: " + serie.getCalificacionEdad());
             }
         } else {
-            System.out.println("No hay series registradas.");
+            System.out.println("No hay series registradas");
         }
         session.close();
     }
@@ -476,15 +477,274 @@ public class Main {
 
 
     private static void gestionarEpisodios(Scanner scanner) {
+        while (true) {
+            System.out.println("\n--- GESTIONAR EPISODIOS ---");
+            System.out.println("1. Insertar Episodio");
+            System.out.println("2. Modificar Episodio");
+            System.out.println("3. Eliminar Episodio");
+            System.out.println("4. Mostrar Episodios");
+            System.out.println("5. Volver al Menú Principal");
 
+            int opcion = scanner.nextInt();
+            scanner.nextLine();
+
+            switch (opcion) {
+                case 1 -> insertarEpisodio(scanner);
+                case 2 -> modificarEpisodio(scanner);
+                case 3 -> eliminarEpisodio(scanner);
+                case 4 -> mostrarEpisodios();
+                case 5 -> {
+                    return;
+                }
+                default -> System.out.println("Opción no válida.");
+            }
+        }
+    }
+
+    private static void insertarEpisodio(Scanner scanner) {
+        System.out.print("Ingresa el título del episodio: ");
+        String titulo = scanner.nextLine();
+
+        System.out.print("Ingresa la duración del episodio (en minutos): ");
+        int duracion = scanner.nextInt();
+        scanner.nextLine();
+
+        System.out.println("Selecciona la serie a la que pertenece el episodio:");
+        List<Serie> series = obtenerSeries();
+        if (series.isEmpty()) {
+            System.out.println("No hay series disponibles. Crea una serie antes de agregar episodios.");
+            return;
+        }
+        for (int i = 0; i < series.size(); i++) {
+            System.out.println((i + 1) + ". " + series.get(i).getTitulo());
+        }
+        int serieOpcion = scanner.nextInt() - 1;
+        scanner.nextLine();
+        Serie serie = series.get(serieOpcion);
+
+
+        Episodio episodio = new Episodio(titulo, duracion);
+        episodio.setSerie(serie);
+
+
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        session.beginTransaction();
+        session.save(episodio);
+        session.getTransaction().commit();
+        session.close();
+
+        System.out.println("Episodio agregado exitosamente.");
+    }
+
+    private static void modificarEpisodio(Scanner scanner) {
+        System.out.print("Ingresa el ID del episodio que deseas modificar: ");
+        int id = scanner.nextInt();
+        scanner.nextLine();
+
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Episodio episodio = session.get(Episodio.class, id);
+
+        if (episodio != null) {
+            System.out.print("Ingresa el nuevo título del episodio: ");
+            episodio.setTitulo(scanner.nextLine());
+
+            System.out.print("Ingresa la nueva duración del episodio (en minutos): ");
+            episodio.setDuracion(scanner.nextInt());
+            scanner.nextLine();
+
+            session.beginTransaction();
+            session.update(episodio);
+            session.getTransaction().commit();
+            System.out.println("Episodio modificado ");
+        } else {
+            System.out.println("Episodio no encontrado");
+        }
+        session.close();
+    }
+
+    private static void eliminarEpisodio(Scanner scanner) {
+        System.out.print("Ingresa el ID del episodio que deseas eliminar: ");
+        int id = scanner.nextInt();
+        scanner.nextLine();
+
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Episodio episodio = session.get(Episodio.class, id);
+
+        if (episodio != null) {
+            session.beginTransaction();
+            session.delete(episodio);
+            session.getTransaction().commit();
+            System.out.println("Episodio eliminado");
+        } else {
+            System.out.println("Episodio no encontrado.");
+        }
+        session.close();
+    }
+
+    private static void mostrarEpisodios() {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        List<Episodio> episodios = session.createQuery("FROM Episodio", Episodio.class).list();
+
+        if (!episodios.isEmpty()) {
+            for (Episodio episodio : episodios) {
+                System.out.println("ID: " + episodio.getId() +
+                        ", Título: " + episodio.getTitulo() +
+                        ", Duración: " + episodio.getDuracion() + " min" +
+                        ", Serie: " + episodio.getSerie().getTitulo());
+            }
+        } else {
+            System.out.println("No hay episodios registrados");
+        }
+        session.close();
+    }
+
+    private static List<Serie> obtenerSeries() {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        List<Serie> series = session.createQuery("FROM Serie", Serie.class).list();
+        session.close();
+        return series;
     }
 
     private static void gestionarHistorial(Scanner scanner) {
+        while (true) {
+            System.out.println("\n--- GESTIONAR HISTORIAL  ---");
+            System.out.println("1. Insertar Registro");
+            System.out.println("2. Modificar Registro");
+            System.out.println("3. Eliminar Registro");
+            System.out.println("4. Mostrar Historial");
+            System.out.println("5. Volver al Menú Principal");
 
+            int opcion = scanner.nextInt();
+            scanner.nextLine();
+
+            switch (opcion) {
+                case 1 -> insertarHistorial(scanner);
+                case 2 -> modificarHistorial(scanner);
+                case 3 -> eliminarHistorial(scanner);
+                case 4 -> mostrarHistorial();
+                case 5 -> {
+                    return;
+                }
+                default -> System.out.println("Opción no válida.");
+            }
+        }
+    }
+
+    private static void insertarHistorial(Scanner scanner) {
+        System.out.println("Selecciona el perfil para el historial:");
+        List<Perfil> perfiles = obtenerPerfiles();
+        if (perfiles.isEmpty()) {
+            System.out.println("No hay perfiles disponibles. Crea un perfil antes de agregar al historial.");
+            return;
+        }
+        for (int i = 0; i < perfiles.size(); i++) {
+            System.out.println((i + 1) + ". " + perfiles.get(i).getNombre());
+        }
+        int perfilOpcion = scanner.nextInt() - 1;
+        scanner.nextLine();
+        Perfil perfil = perfiles.get(perfilOpcion);
+
+        System.out.println("Selecciona el episodio reproducido:");
+        List<Episodio> episodios = obtenerEpisodios();
+        if (episodios.isEmpty()) {
+            System.out.println("No hay episodios disponibles. Crea episodios antes de agregar al historial.");
+            return;
+        }
+        for (int i = 0; i < episodios.size(); i++) {
+            System.out.println((i + 1) + ". " + episodios.get(i).getTitulo() + " (Serie: " + episodios.get(i).getSerie().getTitulo() + ")");
+        }
+        int episodioOpcion = scanner.nextInt() - 1;
+        scanner.nextLine();
+        Episodio episodio = episodios.get(episodioOpcion);
+
+        Historial historial = new Historial();
+        historial.setPerfil(perfil);
+        historial.setEpisodio(episodio);
+
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        session.beginTransaction();
+        session.save(historial);
+        session.getTransaction().commit();
+        session.close();
+
+        System.out.println("Registro de reproducción agregado");
+    }
+
+    private static void modificarHistorial(Scanner scanner) {
+        System.out.print("Ingresa el ID del historial que deseas modificar: ");
+        int id = scanner.nextInt();
+        scanner.nextLine();
+
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Historial historial = session.get(Historial.class, id);
+
+        if (historial != null) {
+
+            System.out.print("Ingresa la nueva fecha de reproducción (yyyy-MM-dd HH:mm): ");
+            String fechaStr = scanner.nextLine();
+            LocalDateTime nuevaFecha = LocalDateTime.parse(fechaStr.replace(" ", "T"));
+            historial.setFechaReproduccion(nuevaFecha);
+
+            session.beginTransaction();
+            session.update(historial);
+            session.getTransaction().commit();
+            System.out.println("Registro de historial modificado");
+        } else {
+            System.out.println("Registro de historial no encontrado");
+        }
+        session.close();
+    }
+
+    private static void eliminarHistorial(Scanner scanner) {
+        System.out.print("Ingresa el ID del historial que deseas eliminar: ");
+        int id = scanner.nextInt();
+        scanner.nextLine();
+
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Historial historial = session.get(Historial.class, id);
+
+        if (historial != null) {
+            session.beginTransaction();
+            session.delete(historial);
+            session.getTransaction().commit();
+            System.out.println("Registro de historial eliminado");
+        } else {
+            System.out.println("Registro de historial no encontrado");
+        }
+        session.close();
+    }
+
+    private static void mostrarHistorial() {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        List<Historial> historialList = session.createQuery("FROM Historial", Historial.class).list();
+
+        if (!historialList.isEmpty()) {
+            for (Historial historial : historialList) {
+                System.out.println("ID: " + historial.getId() +
+                        ", Fecha de Reproducción: " + historial.getFechaReproduccion() +
+                        ", Perfil: " + historial.getPerfil().getNombre() +
+                        ", Episodio: " + historial.getEpisodio().getTitulo());
+            }
+        } else {
+            System.out.println("No hay registros");
+        }
+        session.close();
     }
 
 
+    private static List<Perfil> obtenerPerfiles() {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        List<Perfil> perfiles = session.createQuery("FROM Perfil", Perfil.class).list();
+        session.close();
+        return perfiles;
+    }
 
+    private static List<Episodio> obtenerEpisodios() {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        List<Episodio> episodios = session.createQuery("FROM Episodio", Episodio.class).list();
+        session.close();
+        return episodios;
+    }
 
 
     private static void consultasAvanzadas(Scanner scanner) {
