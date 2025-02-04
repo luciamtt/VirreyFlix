@@ -32,6 +32,8 @@ public class Serie {
         this.titulo = titulo;
     }
 
+
+
     public int getCalificacionEdad() {
         return calificacionEdad;
     }

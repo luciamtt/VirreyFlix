@@ -15,7 +15,7 @@ public class Usuario {
 
     @OneToOne(mappedBy = "usuario", cascade = CascadeType.ALL)
     private Perfil perfil;
-    public Usuario() {
+    public Usuario(String nombre, String correo) {
     }
 
     public Usuario(int id, String nombre, String email) {

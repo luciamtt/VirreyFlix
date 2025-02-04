@@ -20,7 +20,7 @@ public class Perfil {
     @OneToOne
     Usuario u;
 
-    public Perfil() {
+    public Perfil(String nombre, Usuario usuario) {
     }
 
     public Perfil(String nombre, Usuario u, int edad) {
