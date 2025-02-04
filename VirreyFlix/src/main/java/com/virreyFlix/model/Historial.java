@@ -25,6 +25,7 @@ public class Historial {
         this.fechaReproduccion = LocalDateTime.now();
     }
 
+
     public Historial(LocalDateTime fechaReproduccion) {
         this.fechaReproduccion = fechaReproduccion;
 

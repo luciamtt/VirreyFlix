@@ -20,7 +20,7 @@ public class Perfil {
     @OneToOne
     Usuario u;
 
-    public Perfil(String nombre, Usuario usuario) {
+    public Perfil() {
     }
 
     public Perfil(String nombre, Usuario u, int edad) {
@@ -57,6 +57,14 @@ public class Perfil {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     @Override

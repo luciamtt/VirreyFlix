@@ -20,10 +20,16 @@ public class Serie {
     @JoinColumn(name = "genero")
     private Genero genero;
 
+    @Column(name = "edadMinima")
     private int calificacionEdad;
+
 
     @OneToMany(mappedBy = "serie", cascade = CascadeType.ALL)
     private List<Episodio> episodios;
+
+    public Serie() {
+
+    }
 
     public Serie(int calificacionEdad, Genero genero, List<Episodio> episodios, String titulo) {
         this.calificacionEdad = calificacionEdad;

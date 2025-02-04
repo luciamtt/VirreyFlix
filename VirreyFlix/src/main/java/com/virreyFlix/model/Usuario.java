@@ -17,6 +17,8 @@ public class Usuario {
     private Perfil perfil;
     public Usuario(String nombre, String correo) {
     }
+    public Usuario() {
+    }
 
     public Usuario(int id, String nombre, String email) {
         this.id = id;

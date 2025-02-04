@@ -272,7 +272,7 @@ public class Main {
         Usuario usuario = session.get(Usuario.class, usuarioId);
 
         if (usuario != null) {
-            Perfil perfil = new Perfil(nombre, usuario);
+            Perfil perfil = new Perfil();
 
             session.beginTransaction();
             session.save(perfil);
