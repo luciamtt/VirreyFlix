@@ -40,7 +40,6 @@ public class Main {
         }
     }
 
-    // Gestión de Usuarios
     public static void gestionarUsuarios(Scanner scanner) {
         while (true) {
             System.out.println("\n--- GESTIONAR USUARIOS ---");
@@ -273,7 +272,6 @@ public class Main {
 
         if (usuario != null) {
             Perfil perfil = new Perfil();
-
             session.beginTransaction();
             session.save(perfil);
             session.getTransaction().commit();
@@ -398,8 +396,7 @@ public class Main {
     private static void modificarSerie(Scanner scanner) {
         System.out.print("Ingresa el ID de la serie que deseas modificar: ");
         int id = scanner.nextInt();
-        scanner.nextLine();  // Limpieza del buffer
-
+        scanner.nextLine();
         Session session = HibernateUtil.getSessionFactory().openSession();
         Serie serie = session.get(Serie.class, id);
 
@@ -407,21 +404,20 @@ public class Main {
             System.out.print("Ingresa el nuevo título de la serie: ");
             serie.setTitulo(scanner.nextLine());
 
-            // Mostrar todos los géneros disponibles
             System.out.println("Elige el nuevo género de la serie:");
             List<Genero> generos = obtenerGeneros();
             for (int i = 0; i < generos.size(); i++) {
                 System.out.println(i + 1 + ". " + generos.get(i).getNombre());
             }
             int generoOpcion = scanner.nextInt() - 1;
-            scanner.nextLine();  // Limpieza del buffer
+            scanner.nextLine();
             Genero genero = generos.get(generoOpcion);
 
             serie.setGenero(genero);
 
             System.out.print("Ingresa la nueva calificación de edad de la serie: ");
             serie.setCalificacionEdad(scanner.nextInt());
-            scanner.nextLine();  // Limpieza del buffer
+            scanner.nextLine();
 
             session.beginTransaction();
             session.update(serie);
@@ -436,7 +432,7 @@ public class Main {
     private static void eliminarSerie(Scanner scanner) {
         System.out.print("Ingresa el ID de la serie que deseas eliminar: ");
         int id = scanner.nextInt();
-        scanner.nextLine();  // Limpieza del buffer
+        scanner.nextLine();
 
         Session session = HibernateUtil.getSessionFactory().openSession();
         Serie serie = session.get(Serie.class, id);
